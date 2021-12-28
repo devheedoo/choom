@@ -15,3 +15,13 @@ websocket.addEventListener('close', () => {
 setTimeout(() => {
   websocket.send('I AM THE CLIENT');
 }, 5000);
+
+const ul = document.querySelector('ul');
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const input = document.querySelector('input');
+  websocket.send(input.value);
+  input.value = '';
+});
