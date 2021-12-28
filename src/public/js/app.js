@@ -1,1 +1,1 @@
-alert("Hello, Choco with public JS! ");
+alert('Hello, Choco with public JS! ');
