@@ -1,1 +1,1 @@
-alert('Hello, Choco with public JS! ');
+const websocket = new WebSocket(`ws://${window.location.host}`);

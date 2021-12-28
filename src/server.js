@@ -16,3 +16,5 @@ const websocketServer = new WebSocket.Server({ server: httpServer });
 httpServer.listen(3000, () =>
   console.log('Listening on http://localhost:3000 and ws://localhost:3000')
 );
+
+websocketServer.on('connection', console.log);
