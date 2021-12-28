@@ -8,10 +8,6 @@ websocket.addEventListener('close', () => {
   console.log('🚨 websocket server closed');
 });
 
-setTimeout(() => {
-  websocket.send('I AM THE CLIENT');
-}, 5000);
-
 const messagesUl = document.querySelector('ul');
 const nicknameForm = document.querySelector('#nickname');
 const messageForm = document.querySelector('#message');

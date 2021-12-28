@@ -21,12 +21,23 @@ const websockets = [];
 
 websocketServer.on('connection', (websocket) => {
   websockets.push(websocket);
+  websocket['nickname'] = 'Anonymous';
   websocket.send('I AM THE SERVER');
   websocket.on('message', (message) => {
-    console.log(message.toString());
-    websockets.forEach((ws) => {
-      ws.send(message.toString());
-    });
+    // mesage: { type: 'nickname' | 'message'; payload: message }
+    const { type, payload } = JSON.parse(message);
+    switch (type) {
+      case 'nickname': {
+        websocket['nickname'] = payload;
+        break;
+      }
+      case 'message': {
+        websockets.forEach((ws) => {
+          ws.send(`${websocket.nickname}: ${payload}`);
+        });
+        break;
+      }
+    }
   });
   websocket.on('close', () => {
     console.log('🚨 client disconnected');
