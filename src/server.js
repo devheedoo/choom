@@ -17,4 +17,10 @@ httpServer.listen(3000, () =>
   console.log('Listening on http://localhost:3000 and ws://localhost:3000')
 );
 
-websocketServer.on('connection', console.log);
+websocketServer.on('connection', (websocket) => {
+  websocket.send('I AM THE SERVER');
+  websocket.on('message', (message) => console.log(message.toString()));
+  websocket.on('close', () => {
+    console.log('🚨 client disconnected');
+  });
+});
