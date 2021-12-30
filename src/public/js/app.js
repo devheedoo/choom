@@ -6,10 +6,10 @@ const ulChat = document.querySelector('#chat');
 const divWelcome = document.querySelector('#welcome');
 const formRoom = divWelcome.querySelector('#formRoom');
 const inputRoomId = formRoom.querySelector('input');
+const formName = divWelcome.querySelector('#formName');
+const inputName = formName.querySelector('input');
 
 const divRoom = document.querySelector('#room');
-const h3Room = divRoom.querySelector('h3');
-const ulRoom = divRoom.querySelector('ul');
 const formMessage = divRoom.querySelector('#formMessage');
 const inputMessage = formMessage.querySelector('input');
 let currentRoomId = 'no_room_name';
@@ -35,6 +35,15 @@ function addMessageToUlRoom(message) {
 
 socket.on('joined_room', () => {
   addMessageToUlRoom('someone joined this room');
+});
+
+formName.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = inputName.value;
+  socket.emit('client_save_name', name, () => {
+    addMessageToUlRoom(`Now your name is ${name}`);
+  });
+  inputName.value = '';
 });
 
 formMessage.addEventListener('submit', (e) => {
