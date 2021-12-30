@@ -40,6 +40,12 @@ io.on('connection', (socket) => {
     io.sockets.emit('server_change_rooms', getPublicRoomIds());
   });
 
+  socket.on('disconnecting', () => {
+    socket.rooms.forEach((room) => {
+      socket.to(room).emit('leaved_room', socket['name']);
+    });
+  });
+
   socket.on('disconnect', () => {
     io.sockets.emit('server_change_rooms', getPublicRoomIds());
   });
