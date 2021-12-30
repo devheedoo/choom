@@ -25,7 +25,7 @@ io.on('connection', (socket) => {
     // Emit to room members including sender
     // io.sockets.to(roomId).emit('joined_room');
     // Emit to room members but sender
-    socket.to(roomId).emit('joined_room');
+    socket.to(roomId).emit('joined_room', socket['name']);
   });
 
   socket.on('client_save_name', (name, callback) => {
@@ -37,7 +37,9 @@ io.on('connection', (socket) => {
   socket.on('client_send_message', (request, callback) => {
     const { roomId, text } = request;
     callback();
-    socket.to(roomId).emit('server_send_message', { text });
+    socket
+      .to(roomId)
+      .emit('server_send_message', { name: socket['name'], text });
   });
 });
 
