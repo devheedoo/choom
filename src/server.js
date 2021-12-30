@@ -15,6 +15,7 @@ const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
   socket.onAny((e) => console.log(`io event: ${e}`));
+
   // request: { roomId: string; }
   socket.on('join_room', (request, callback) => {
     const { roomId } = request;
@@ -26,9 +27,9 @@ io.on('connection', (socket) => {
     socket.to(roomId).emit('joined_room');
   });
 
-  // request: { text: string; }
+  // request: { roomId: string, text: string; }
   socket.on('client_send_message', (request, callback) => {
-    const { text, roomId } = request;
+    const { roomId, text } = request;
     callback();
     socket.to(roomId).emit('server_send_message', { text });
   });

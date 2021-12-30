@@ -46,3 +46,8 @@ formMessage.addEventListener('submit', (e) => {
 function handleClientSendMessage(text) {
   addMessageToUlRoom(`You: ${text}`);
 }
+
+socket.on('server_send_message', (response) => {
+  // response: { text: string;}
+  addMessageToUlRoom(response.text);
+});
