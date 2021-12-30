@@ -33,8 +33,8 @@ function addMessageToUlRoom(message) {
   ulChat.append(li);
 }
 
-socket.on('joined_room', () => {
-  addMessageToUlRoom('someone joined this room');
+socket.on('joined_room', (name) => {
+  addMessageToUlRoom(`${name} joined this room`);
 });
 
 formName.addEventListener('submit', (e) => {
@@ -60,6 +60,7 @@ function handleClientSendMessage(text) {
 }
 
 socket.on('server_send_message', (response) => {
-  // response: { text: string;}
-  addMessageToUlRoom(response.text);
+  // response: { name: string; text: string;}
+  const { name, text } = response;
+  addMessageToUlRoom(`${name}: ${text}`);
 });
