@@ -37,6 +37,11 @@ io.on('connection', (socket) => {
     // io.sockets.to(roomId).emit('joined_room');
     // Emit to room members but sender
     socket.to(roomId).emit('joined_room', socket['name']);
+    io.sockets.emit('server_change_rooms', getPublicRoomIds());
+  });
+
+  socket.on('disconnect', () => {
+    io.sockets.emit('server_change_rooms', getPublicRoomIds());
   });
 
   socket.on('client_save_name', (name, callback) => {
