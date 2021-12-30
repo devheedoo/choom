@@ -26,6 +26,7 @@ function getPublicRoomIds() {
 
 io.on('connection', (socket) => {
   socket['name'] = 'user-' + socket.id.slice(0, 5);
+  io.sockets.emit('server_change_rooms', getPublicRoomIds());
   socket.onAny((e) => console.log(`io event: ${e}`));
 
   // request: { roomId: string; }
