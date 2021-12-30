@@ -1,6 +1,6 @@
 const socket = io(); // from socket.io
 
-const formRoom = document.querySelector('#roomForm');
+const formRoom = document.querySelector('#formRoom');
 const inputRoomId = formRoom.querySelector('input');
 
 formRoom.addEventListener('submit', (e) => {
