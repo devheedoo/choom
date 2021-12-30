@@ -13,6 +13,17 @@ app.get('/*', (req, res) => res.redirect('/'));
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
+function getPublicRoomIds() {
+  const { sids, rooms } = io.sockets.adapter;
+  const publicRoomIds = [];
+  rooms.forEach((value, key) => {
+    if (sids.get(key) === undefined) {
+      publicRoomIds.push(key);
+    }
+  });
+  return publicRoomIds;
+}
+
 io.on('connection', (socket) => {
   socket['name'] = 'user-' + socket.id.slice(0, 5);
   socket.onAny((e) => console.log(`io event: ${e}`));
