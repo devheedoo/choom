@@ -33,3 +33,16 @@ function addMessageToUlRoom(message) {
 socket.on('joined_room', () => {
   addMessageToUlRoom('someone joined this room');
 });
+
+formMessage.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const text = inputMessage.value;
+  socket.emit('client_send_message', { roomId: currentRoomId, text }, () =>
+    handleClientSendMessage(text)
+  );
+  inputMessage.value = '';
+});
+
+function handleClientSendMessage(text) {
+  addMessageToUlRoom(`You: ${text}`);
+}
