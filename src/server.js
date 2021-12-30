@@ -13,7 +13,12 @@ app.get('/*', (req, res) => res.redirect('/'));
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
-io.on('connection', (socket) => console.log(socket));
+io.on('connection', (socket) => {
+  socket.on('enter_room', (request, callback) => {
+    console.log(request);
+    callback();
+  });
+});
 
 httpServer.listen(3000, () =>
   console.log('Listening on http://localhost:3000 and ws://localhost:3000')
