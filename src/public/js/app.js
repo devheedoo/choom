@@ -13,6 +13,7 @@ const ulRooms = divWelcome.querySelector('ul');
 const divRoom = document.querySelector('#room');
 const formMessage = divRoom.querySelector('#formMessage');
 const inputMessage = formMessage.querySelector('input');
+const buttonLeaveRoom = divRoom.querySelector('#buttonLeaveRoom');
 let currentRoomId = 'no_room_name';
 
 formRoom.addEventListener('submit', (e) => {
@@ -26,6 +27,7 @@ function handleJoinRoom() {
   divWelcome.hidden = true;
   divRoom.hidden = false;
   h2Title.innerHTML = currentRoomId;
+  ulChat.innerHTML = '';
 }
 
 function addMessageToUlRoom(message) {
@@ -78,3 +80,14 @@ socket.on('server_change_rooms', (roomIds) => {
 socket.on('disconnecting', (name) => {
   addMessageToUlRoom(`${name}: leaved this room.`);
 });
+
+buttonLeaveRoom.addEventListener('click', () => {
+  socket.emit('client_leave_room', currentRoomId, handleLeaveRoom);
+});
+
+function handleLeaveRoom() {
+  divWelcome.hidden = false;
+  divRoom.hidden = true;
+  h2Title.innerHTML = 'Lobby';
+  ulChat.innerHTML = '';
+}
