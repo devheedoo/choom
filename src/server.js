@@ -25,6 +25,13 @@ io.on('connection', (socket) => {
     // Emit to room members but sender
     socket.to(roomId).emit('joined_room');
   });
+
+  // request: { text: string; }
+  socket.on('client_send_message', (request, callback) => {
+    const { text, roomId } = request;
+    callback();
+    socket.to(roomId).emit('server_send_message', { text });
+  });
 });
 
 httpServer.listen(3000, () =>
