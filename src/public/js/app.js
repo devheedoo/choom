@@ -1,5 +1,8 @@
 const socket = io(); // from socket.io
 
+const h2Title = document.querySelector('h2');
+const ulChat = document.querySelector('#chat');
+
 const divWelcome = document.querySelector('#welcome');
 const formRoom = divWelcome.querySelector('#formRoom');
 const inputRoomId = formRoom.querySelector('input');
@@ -21,13 +24,13 @@ formRoom.addEventListener('submit', (e) => {
 function handleJoinRoom() {
   divWelcome.hidden = true;
   divRoom.hidden = false;
-  h3Room.innerHTML = currentRoomId;
+  h2Title.innerHTML = currentRoomId;
 }
 
 function addMessageToUlRoom(message) {
   const li = document.createElement('li');
   li.innerHTML = message;
-  ulRoom.append(li);
+  ulChat.append(li);
 }
 
 socket.on('joined_room', () => {

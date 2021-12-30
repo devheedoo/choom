@@ -10,13 +10,13 @@ html(lang="en")
     header
       h1 Choom 
     main 
+      h2#Title Lobby
+      ul#chat
       div#welcome
         form#formRoom
           input(placeholder="Room ID", required, type="text")
           button Join
       div#room(hidden)
-        h3
-        ul
         form#formMessage
           input(placeholder="message", required, type="text")
           button Send
