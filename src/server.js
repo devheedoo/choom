@@ -28,6 +28,11 @@ io.on('connection', (socket) => {
     socket.to(roomId).emit('joined_room');
   });
 
+  socket.on('client_save_name', (name, callback) => {
+    socket['name'] = name;
+    callback();
+  });
+
   // request: { roomId: string, text: string; }
   socket.on('client_send_message', (request, callback) => {
     const { roomId, text } = request;
