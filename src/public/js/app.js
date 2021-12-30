@@ -35,7 +35,7 @@ function addMessageToUlRoom(message) {
 }
 
 socket.on('joined_room', (name) => {
-  addMessageToUlRoom(`${name} joined this room`);
+  addMessageToUlRoom(`${name} joined this room.`);
 });
 
 formName.addEventListener('submit', (e) => {
@@ -73,4 +73,8 @@ socket.on('server_change_rooms', (roomIds) => {
     li.innerHTML = roomId;
     ulRooms.append(li);
   });
+});
+
+socket.on('disconnecting', (name) => {
+  addMessageToUlRoom(`${name}: leaved this room.`);
 });
