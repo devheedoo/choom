@@ -14,6 +14,7 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
+  socket['name'] = 'user-' + socket.id.slice(0, 5);
   socket.onAny((e) => console.log(`io event: ${e}`));
 
   // request: { roomId: string; }
