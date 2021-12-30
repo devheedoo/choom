@@ -17,8 +17,10 @@ io.on('connection', (socket) => {
   socket.onAny((e) => console.log(`io event: ${e}`));
   // request: { roomId: string; }
   socket.on('enter_room', (request, callback) => {
-    socket.join(request.roomId);
+    const { roomId } = request;
+    socket.join(roomId);
     callback();
+    socket.to(roomId).emit('entered_room');
   });
 });
 
