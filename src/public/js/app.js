@@ -8,6 +8,7 @@ const formRoom = divWelcome.querySelector('#formRoom');
 const inputRoomId = formRoom.querySelector('input');
 const formName = divWelcome.querySelector('#formName');
 const inputName = formName.querySelector('input');
+const ulRooms = divWelcome.querySelector('ul');
 
 const divRoom = document.querySelector('#room');
 const formMessage = divRoom.querySelector('#formMessage');
@@ -63,4 +64,13 @@ socket.on('server_send_message', (response) => {
   // response: { name: string; text: string;}
   const { name, text } = response;
   addMessageToUlRoom(`${name}: ${text}`);
+});
+
+socket.on('server_change_rooms', (roomIds) => {
+  ulRooms.innerHTML = '';
+  roomIds.forEach((roomId) => {
+    const li = document.createElement('li');
+    li.innerHTML = roomId;
+    ulRooms.append(li);
+  });
 });
