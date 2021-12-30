@@ -64,6 +64,12 @@ io.on('connection', (socket) => {
       .to(roomId)
       .emit('server_send_message', { name: socket['name'], text });
   });
+
+  socket.on('client_leave_room', (roomId, callback) => {
+    socket.leave(roomId);
+    callback();
+    io.sockets.emit('server_change_rooms', getPublicRoomIds());
+  });
 });
 
 httpServer.listen(3000, () =>
