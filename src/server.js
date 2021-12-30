@@ -14,8 +14,10 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
+  socket.onAny((e) => console.log(`io event: ${e}`));
+  // request: { roomId: string; }
   socket.on('enter_room', (request, callback) => {
-    console.log(request);
+    socket.join(request.roomId);
     callback();
   });
 });
