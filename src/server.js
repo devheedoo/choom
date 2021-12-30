@@ -20,6 +20,9 @@ io.on('connection', (socket) => {
     const { roomId } = request;
     socket.join(roomId);
     callback();
+    // Emit to room members including sender
+    // io.sockets.to(roomId).emit('joined_room');
+    // Emit to room members but sender
     socket.to(roomId).emit('joined_room');
   });
 });
