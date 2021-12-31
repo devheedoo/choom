@@ -2,10 +2,15 @@ const socket = io(); // from socket.io
 
 const divMyStream = document.getElementById('divMyStream');
 const videoMyStream = divMyStream.querySelector('video');
+const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
+const buttonVideoOnOff = document.getElementById('buttonVideoOnOff');
+
+/** @type {MediaStream} */
+let myStream;
 
 async function getMyStream() {
   try {
-    const myStream = await navigator.mediaDevices.getUserMedia({
+    myStream = await navigator.mediaDevices.getUserMedia({
       video: true,
       audio: true,
     });
@@ -14,5 +19,23 @@ async function getMyStream() {
     console.log(e);
   }
 }
-
 getMyStream();
+
+let isAudioOff = false;
+let isVideoOff = false;
+
+buttonAudioOnOff.addEventListener('click', () => {
+  buttonAudioOnOff.innerHTML = isAudioOff ? 'Audio ON' : 'Audio OFF';
+  isAudioOff = !isAudioOff;
+  myStream
+    .getAudioTracks()
+    .forEach((track) => (track.enabled = !track.enabled));
+});
+
+buttonVideoOnOff.addEventListener('click', () => {
+  buttonVideoOnOff.innerHTML = isVideoOff ? 'Video ON' : 'Video OFF';
+  isVideoOff = !isVideoOff;
+  myStream
+    .getVideoTracks()
+    .forEach((track) => (track.enabled = !track.enabled));
+});
