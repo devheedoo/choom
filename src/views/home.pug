@@ -10,5 +10,9 @@ html(lang="en")
     header
       h1 Choom 
     main 
+      div#divMyStream
+        video(autoplay, playsinline, width="400", height="400")
+        button#buttonAudioOnOff Audio ON
+        button#buttonVideoOnOff Video ON
     script(src="/socket.io/socket.io.js") 
     script(src="/public/js/app.js") 
