@@ -14,10 +14,13 @@ const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
 io.on('connection', (socket) => {
-  socket.on('client_join_room', (roomId, handleJoinRoom) => {
+  socket.on('client_join_room', (roomId) => {
     socket.join(roomId);
-    handleJoinRoom();
     socket.to(roomId).emit('server_joined_room');
+  });
+
+  socket.on('client_send_offer', (roomId, offer) => {
+    socket.to(roomId).emit('server_offer', offer);
   });
 });
 
