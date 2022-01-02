@@ -8,6 +8,14 @@ const inputRoomId = document.getElementById('inputRoomId');
 const buttonJoinRoom = document.getElementById('buttonJoinRoom');
 let currentRoomId = 'no_public_room_id';
 
+// Mirror
+const divMirror = document.getElementById('divMirror');
+const spanMirrorRoomId = document.getElementById('spanMirrorRoomId');
+const videoMirror = document.getElementById('videoMirror');
+const buttonPreAudioOnOff = document.getElementById('buttonPreAudioOnOff');
+const buttonPreVideoOnOff = document.getElementById('buttonPreVideoOnOff');
+const buttonEnterRoom = document.getElementById('buttonEnterRoom');
+
 // Call
 const divCall = document.getElementById('divCall');
 const divMyStream = document.getElementById('divMyStream');
@@ -31,11 +39,31 @@ let isVideoOff = false;
 /** @type {RTCDataChannel} */
 let myDataChannel;
 
+async function readyToJoin() {
+  console.log('readyToJoin');
+  divRoom.style.display = 'none';
+  divMirror.style.display = 'flex';
+  spanMirrorRoomId.innerHTML = currentRoomId;
+  await getMirror();
+}
+
 async function initCall() {
   divRoom.hidden = true;
   divCall.hidden = false;
   await getMyStream();
   makeConnection();
+}
+
+async function getMirror() {
+  try {
+    myStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'user' },
+      audio: true,
+    });
+    videoMirror.srcObject = myStream;
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 async function getMyStream() {
@@ -92,15 +120,54 @@ formCreateRoom.addEventListener('submit', async (e) => {
     randomRoomId += UPPERCASE_ALPHABET[randomIndex];
   }
   currentRoomId = randomRoomId;
+  readyToJoin();
   inputRoomId.value = '';
 });
 
 formJoinRoom.addEventListener('submit', async (e) => {
   e.preventDefault();
   currentRoomId = inputRoomId.value;
-  await initCall();
-  socket.emit('join_room', currentRoomId);
+  readyToJoin();
   inputRoomId.value = '';
+});
+
+buttonPreAudioOnOff.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (isAudioOff) {
+    buttonPreAudioOnOff.classList.remove('buttonOff');
+    buttonPreAudioOnOff.classList.add('buttonOn');
+    buttonPreAudioOnOff.innerHTML = '<i class="fas fa-microphone"></i>';
+  } else {
+    buttonPreAudioOnOff.classList.remove('buttonOn');
+    buttonPreAudioOnOff.classList.add('buttonOff');
+    buttonPreAudioOnOff.innerHTML = '<i class="fas fa-microphone-slash"></i>';
+  }
+  isAudioOff = !isAudioOff;
+  myStream
+    .getAudioTracks()
+    .forEach((track) => (track.enabled = !track.enabled));
+});
+
+buttonPreVideoOnOff.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (isVideoOff) {
+    buttonPreVideoOnOff.classList.remove('buttonOff');
+    buttonPreVideoOnOff.classList.add('buttonOn');
+    buttonPreVideoOnOff.innerHTML = '<i class="fas fa-video"></i>';
+  } else {
+    buttonPreVideoOnOff.classList.remove('buttonOn');
+    buttonPreVideoOnOff.classList.add('buttonOff');
+    buttonPreVideoOnOff.innerHTML = '<i class="fas fa-video-slash"></i>';
+  }
+  isVideoOff = !isVideoOff;
+  myStream
+    .getVideoTracks()
+    .forEach((track) => (track.enabled = !track.enabled));
+});
+
+buttonEnterRoom.addEventListener('click', (e) => {
+  e.preventDefault();
+  initCall();
 });
 
 buttonAudioOnOff.addEventListener('click', () => {
