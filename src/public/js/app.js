@@ -12,9 +12,12 @@ let currentRoomId = 'no_public_room_id';
 const divMirror = document.getElementById('divMirror');
 const spanMirrorRoomId = document.getElementById('spanMirrorRoomId');
 const videoMirror = document.getElementById('videoMirror');
+
+const divButtons = document.getElementById('divButtons');
 const buttonPreAudioOnOff = document.getElementById('buttonPreAudioOnOff');
 const buttonPreVideoOnOff = document.getElementById('buttonPreVideoOnOff');
 const buttonEnterRoom = document.getElementById('buttonEnterRoom');
+const buttonLeaveRoom = document.getElementById('buttonLeaveRoom');
 
 // Call
 const divCall = document.getElementById('divCall');
@@ -43,13 +46,16 @@ async function readyToJoin() {
   console.log('readyToJoin');
   divRoom.style.display = 'none';
   divMirror.style.display = 'flex';
+  divButtons.style.display = 'flex';
   spanMirrorRoomId.innerHTML = currentRoomId;
   await getMirror();
 }
 
 async function initCall() {
-  divRoom.hidden = true;
-  divCall.hidden = false;
+  divMirror.style.display = 'none';
+  divCall.style.display = 'flex';
+  buttonEnterRoom.style.display = 'none';
+  buttonLeaveRoom.style.display = 'block';
   await getMyStream();
   makeConnection();
 }
@@ -69,10 +75,6 @@ async function getMirror() {
 
 async function getMyStream() {
   try {
-    myStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'user' },
-      audio: true,
-    });
     videoMyStream.srcObject = myStream;
     getCameras();
   } catch (e) {
@@ -169,22 +171,6 @@ buttonPreVideoOnOff.addEventListener('click', (e) => {
 buttonEnterRoom.addEventListener('click', (e) => {
   e.preventDefault();
   initCall();
-});
-
-buttonAudioOnOff.addEventListener('click', () => {
-  buttonAudioOnOff.innerHTML = isAudioOff ? 'Audio ON' : 'Audio OFF';
-  isAudioOff = !isAudioOff;
-  myStream
-    .getAudioTracks()
-    .forEach((track) => (track.enabled = !track.enabled));
-});
-
-buttonVideoOnOff.addEventListener('click', () => {
-  buttonVideoOnOff.innerHTML = isVideoOff ? 'Video ON' : 'Video OFF';
-  isVideoOff = !isVideoOff;
-  myStream
-    .getVideoTracks()
-    .forEach((track) => (track.enabled = !track.enabled));
 });
 
 selectCameras.addEventListener('input', () => {
