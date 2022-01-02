@@ -173,6 +173,11 @@ buttonEnterRoom.addEventListener('click', (e) => {
   initCall();
 });
 
+buttonLeaveRoom.addEventListener('click', (e) => {
+  e.preventDefault();
+  location.reload();
+});
+
 selectCameras.addEventListener('input', () => {
   changeCamera(selectCameras.value);
   const myVideoTrack = myStream.getVideoTracks()[0];
