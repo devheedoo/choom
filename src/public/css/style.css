@@ -127,3 +127,65 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+
+/* custom CSS */
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: whitesmoke;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#container {
+  width: 70vh;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+header {
+  font-size: 48px;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+#divRoom {
+  width: 60vw;
+  height: 20vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#inputRoomId {
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 10px;
+}
+
+.buttonRoom {
+  border: 1px solid grey;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 10px;
+}
+
+#buttonCreateRoom {
+  background-color: rgb(67, 67, 228);
+  color: white;
+}
+
+#spanOR {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+i {
+  margin: 2px;
+}

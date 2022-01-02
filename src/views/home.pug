@@ -7,13 +7,20 @@ html(lang="en")
     title Choom
     link(rel="stylesheet", href="/public/css/style.css")
   body
+    div#container
     header
       h1 Choom 
     main 
       div#divRoom
-        form#formRoom
-          input#inputRoomId(type="text", placeholder="room id", required)
-          button#buttonJoinRoom Create or Join
+          form#formCreateRoom
+            button#buttonCreateRoom(class='buttonRoom')
+              i.fas.fa-video
+              span NEW
+          span#spanOR OR
+          form#formJoinRoom
+            input#inputRoomId(type="text", placeholder="Enter Room Code", required)
+            button#buttonJoinRoom(class='buttonRoom')
+              span JOIN
       div#divCall(hidden=true)
         div#divMyStream
           video#videoMyStream(autoplay, playsinline, width="400", height="400")
@@ -23,3 +30,4 @@ html(lang="en")
           video#videoPeerStream(autoplay, playsinline, width="400", height="400")
     script(src="/socket.io/socket.io.js") 
     script(src="/public/js/app.js") 
+    script(src="https://kit.fontawesome.com/511fbf653b.js")
