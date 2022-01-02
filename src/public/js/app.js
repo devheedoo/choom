@@ -10,10 +10,11 @@ let currentRoomId = 'no_public_room_id';
 // Call
 const divCall = document.getElementById('divCall');
 const divMyStream = document.getElementById('divMyStream');
-const videoMyStream = divMyStream.querySelector('video');
+const videoMyStream = document.getElementById('videoMyStream');
 const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
 const buttonVideoOnOff = document.getElementById('buttonVideoOnOff');
 const selectCameras = document.getElementById('selectCameras');
+const videoPeerStream = document.getElementById('videoPeerStream');
 
 /** @type {MediaStream} */
 let myStream;
@@ -124,11 +125,22 @@ socket.on('server_answer', (answer) => {
   console.log(answer);
   myPeerConnection.setRemoteDescription(answer);
 });
+
+socket.on('ice', (ice) => {
+  myPeerConnection.addIceCandidate(ice);
 });
 
 // RTC
 function makeConnection() {
   myPeerConnection = new RTCPeerConnection();
+  myPeerConnection.addEventListener('icecandidate', (data) => {
+    console.log('icecandidate:', data);
+    socket.emit('ice', currentRoomId, data.candidate);
+  });
+  myPeerConnection.addEventListener('addstream', (data) => {
+    console.log('addstream:', data);
+    videoPeerStream.srcObject = data.stream;
+  });
   myStream
     .getTracks()
     .forEach((track) => myPeerConnection.addTrack(track, myStream));
