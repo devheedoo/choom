@@ -4,7 +4,7 @@ const divMyStream = document.getElementById('divMyStream');
 const videoMyStream = divMyStream.querySelector('video');
 const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
 const buttonVideoOnOff = document.getElementById('buttonVideoOnOff');
-const selectCameras = document.getElementById('cameras');
+const selectCameras = document.getElementById('selectCameras');
 
 /** @type {MediaStream} */
 let myStream;
@@ -13,7 +13,7 @@ let cameras = [];
 async function getMyStream() {
   try {
     myStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
+      video: { facingMode: 'user' },
       audio: true,
     });
     videoMyStream.srcObject = myStream;
@@ -42,6 +42,18 @@ async function getCameras() {
   }
 }
 
+async function changeCamera(cameraDeviceId) {
+  try {
+    myStream = await navigator.mediaDevices.getUserMedia({
+      video: { deviceId: { exact: cameraDeviceId } },
+      audio: true,
+    });
+    videoMyStream.srcObject = myStream;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 getMyStream();
 
 let isAudioOff = false;
@@ -61,4 +73,8 @@ buttonVideoOnOff.addEventListener('click', () => {
   myStream
     .getVideoTracks()
     .forEach((track) => (track.enabled = !track.enabled));
+});
+
+selectCameras.addEventListener('input', () => {
+  changeCamera(selectCameras.value);
 });
