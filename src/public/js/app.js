@@ -169,9 +169,10 @@ buttonPreVideoOnOff.addEventListener('click', (e) => {
     .forEach((track) => (track.enabled = !track.enabled));
 });
 
-buttonEnterRoom.addEventListener('click', (e) => {
+buttonEnterRoom.addEventListener('click', async (e) => {
   e.preventDefault();
-  initCall();
+  await initCall();
+  socket.emit('join_room', currentRoomId);
 });
 
 buttonLeaveRoom.addEventListener('click', (e) => {
