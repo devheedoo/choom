@@ -61,6 +61,7 @@ async function getMirror() {
       audio: true,
     });
     videoMirror.srcObject = myStream;
+    getCameras();
   } catch (e) {
     console.log(e);
   }
@@ -104,7 +105,7 @@ async function changeCamera(cameraDeviceId) {
       video: { deviceId: { exact: cameraDeviceId } },
       audio: true,
     });
-    videoMyStream.srcObject = myStream;
+    videoMirror.srcObject = myStream;
   } catch (e) {
     console.log(e);
   }
