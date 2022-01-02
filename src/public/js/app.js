@@ -113,8 +113,17 @@ socket.on('server_joined_room', async () => {
   socket.emit('client_send_offer', currentRoomId, myOffer);
 });
 
-socket.on('server_offer', (offer) => {
-  console.log(offer);
+socket.on('server_offer', async (offer) => {
+  myPeerConnection.setRemoteDescription(offer);
+  const myAnswer = await myPeerConnection.createAnswer();
+  myPeerConnection.setLocalDescription(myAnswer);
+  socket.emit('client_send_answer', currentRoomId, myAnswer);
+});
+
+socket.on('server_answer', (answer) => {
+  console.log(answer);
+  myPeerConnection.setRemoteDescription(answer);
+});
 });
 
 // RTC
