@@ -82,7 +82,7 @@ formRoom.addEventListener('submit', async (e) => {
   e.preventDefault();
   currentRoomId = inputRoomId.value;
   await initCall();
-  socket.emit('client_join_room', currentRoomId);
+  socket.emit('join_room', currentRoomId);
   inputRoomId.value = '';
 });
 
@@ -107,21 +107,21 @@ selectCameras.addEventListener('input', () => {
 });
 
 // Socket
-socket.on('server_joined_room', async () => {
+socket.on('join_room', async () => {
   console.log('someone joined room.');
   const myOffer = await myPeerConnection.createOffer();
   myPeerConnection.setLocalDescription(myOffer);
-  socket.emit('client_send_offer', currentRoomId, myOffer);
+  socket.emit('offer', currentRoomId, myOffer);
 });
 
-socket.on('server_offer', async (offer) => {
+socket.on('offer', async (offer) => {
   myPeerConnection.setRemoteDescription(offer);
   const myAnswer = await myPeerConnection.createAnswer();
   myPeerConnection.setLocalDescription(myAnswer);
-  socket.emit('client_send_answer', currentRoomId, myAnswer);
+  socket.emit('answer', currentRoomId, myAnswer);
 });
 
-socket.on('server_answer', (answer) => {
+socket.on('answer', (answer) => {
   console.log(answer);
   myPeerConnection.setRemoteDescription(answer);
 });
