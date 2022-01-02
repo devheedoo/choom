@@ -211,8 +211,9 @@ i {
   line-height: 1.4;
 }
 
-#selectCameras {
-  margin: 10px;
+#videoMirror {
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .divButtons {
