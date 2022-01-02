@@ -104,6 +104,13 @@ buttonVideoOnOff.addEventListener('click', () => {
 
 selectCameras.addEventListener('input', () => {
   changeCamera(selectCameras.value);
+  const myVideoTrack = myStream.getVideoTracks()[0];
+  if (myPeerConnection) {
+    const videoSender = myPeerConnection
+      .getSenders()
+      .filter((s) => s.track.kind === 'video');
+    videoSender.replaceTrack(myVideoTrack);
+  }
 });
 
 // Socket
