@@ -10,10 +10,15 @@ html(lang="en")
     header
       h1 Choom 
     main 
-      div#divMyStream
-        video(autoplay, playsinline, width="400", height="400")
-        button#buttonAudioOnOff Audio ON
-        button#buttonVideoOnOff Video ON
-        select#selectCameras
+      div#divRoom
+        form#formRoom
+          input#inputRoomId(type="text", placeholder="room id", required)
+          button#buttonJoinRoom Create or Join
+      div#call(hidden=true)
+        div#divMyStream
+          video(autoplay, playsinline, width="400", height="400")
+          button#buttonAudioOnOff Audio ON
+          button#buttonVideoOnOff Video ON
+          select#selectCameras
     script(src="/socket.io/socket.io.js") 
     script(src="/public/js/app.js") 
