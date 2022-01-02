@@ -78,7 +78,6 @@ async function getMirror() {
 async function getMyStream() {
   try {
     videoMyStream.srcObject = myStream;
-    getCameras();
   } catch (e) {
     console.log(e);
   }
