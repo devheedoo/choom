@@ -27,6 +27,7 @@ html(lang="en")
           h2#h2MirrorRoomId ROOM CODE: 
             span#spanMirrorRoomId
           video#videoMirror(autoplay, playsinline, width="400")
+          select#selectCameras
           div.divButtons
             button#buttonPreAudioOnOff(class='circleButton buttonOn')
               i.fas.fa-microphone
@@ -34,7 +35,7 @@ html(lang="en")
               i.fas.fa-video
             button#buttonEnterRoom(class='circleButton')
               i.fas.fa-sign-in-alt
-      div#divCall(hidden=true)
+          span Are you ready to join room?
         div#divMyStream
           video#videoMyStream(autoplay, playsinline, width="400", height="400")
           button#buttonAudioOnOff Audio ON

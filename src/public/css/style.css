@@ -211,11 +211,15 @@ i {
   line-height: 1.4;
 }
 
+#selectCameras {
+  margin: 10px;
+}
+
 .divButtons {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15px;
+  margin: 10px;
 }
 
 .circleButton {
