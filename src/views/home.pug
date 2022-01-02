@@ -8,41 +8,41 @@ html(lang="en")
     link(rel="stylesheet", href="/public/css/style.css")
   body
     div#container
-    header
-      h1 Choom 
-    main 
-      div#divRoom
+      header
+        h1 Choom
+      main
+        div#divRoom
           span First, you will go MIRROR room
           div#divRoomForm
-          form#formCreateRoom
-            button#buttonCreateRoom(class='buttonRoom')
-              i.fas.fa-video
-              span NEW
-          span#spanOR OR
-          form#formJoinRoom
-            input#inputRoomId(type="text", placeholder="Enter Room Code", required)
-            button#buttonJoinRoom(class='buttonRoom')
-              span JOIN
+            form#formCreateRoom
+              button#buttonCreateRoom(class='buttonRoom')
+                i.fas.fa-video
+                span NEW
+            span#spanOR OR
+            form#formJoinRoom
+              input#inputRoomId(type="text", placeholder="Enter Room Code", required)
+              button#buttonJoinRoom(class='buttonRoom')
+                span JOIN
         div#divMirror
           h2#h2MirrorRoomId ROOM CODE: 
             span#spanMirrorRoomId
           span Are you ready to join room?
           video#videoMirror(autoplay, playsinline, width="400")
           select#selectCameras
-          div.divButtons
-            button#buttonPreAudioOnOff(class='circleButton buttonOn')
-              i.fas.fa-microphone
-            button#buttonPreVideoOnOff(class='circleButton buttonOn')
-              i.fas.fa-video
-            button#buttonEnterRoom(class='circleButton')
-              i.fas.fa-sign-in-alt
-          span Are you ready to join room?
-        div#divMyStream
-          video#videoMyStream(autoplay, playsinline, width="400", height="400")
-          button#buttonAudioOnOff Audio ON
-          button#buttonVideoOnOff Video ON
-          select#selectCameras
-          video#videoPeerStream(autoplay, playsinline, width="400", height="400")
+        div#divCall
+          div#divMyStream
+            div#divVideos
+              video#videoMyStream(autoplay, playsinline, width="400")
+              video#videoPeerStream(autoplay, playsinline, width="400")
+        div#divButtons
+          button#buttonPreAudioOnOff(class='circleButton buttonOn')
+            i.fas.fa-microphone
+          button#buttonPreVideoOnOff(class='circleButton buttonOn')
+            i.fas.fa-video
+          button#buttonEnterRoom(class='circleButton')
+            i.fas.fa-sign-in-alt
+          button#buttonLeaveRoom(class='circleButton')
+            i.fas.fa-sign-out-alt
     script(src="/socket.io/socket.io.js") 
     script(src="/public/js/app.js") 
     script(src="https://kit.fontawesome.com/511fbf653b.js")

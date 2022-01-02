@@ -216,8 +216,8 @@ i {
   margin-bottom: 10px;
 }
 
-.divButtons {
-  display: flex;
+#divButtons {
+  display: none;
   justify-content: center;
   align-items: center;
   margin: 10px;
@@ -243,4 +243,23 @@ i {
 .buttonOff {
   background-color: whitesmoke;
   color: rgb(67, 67, 228);
+}
+
+#buttonLeaveRoom {
+  display: none;
+}
+
+#divCall {
+  width: 900px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#divVideos {
+  width: 850px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
