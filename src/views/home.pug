@@ -24,12 +24,13 @@ html(lang="en")
               button#buttonJoinRoom(class='buttonRoom')
                 span JOIN
         div#divMirror
-          h2#h2MirrorRoomId ROOM CODE: 
+          span Are you ready to join room? CODE: 
             span#spanMirrorRoomId
-          span Are you ready to join room?
           video#videoMirror(autoplay, playsinline, width="400")
           select#selectCameras
         div#divCall
+          span current room CODE: 
+            span#spanCallRoomId
           div#divMyStream
             div#divVideos
               video#videoMyStream(autoplay, playsinline, width="400")

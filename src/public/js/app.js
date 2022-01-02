@@ -21,6 +21,7 @@ const buttonLeaveRoom = document.getElementById('buttonLeaveRoom');
 
 // Call
 const divCall = document.getElementById('divCall');
+const spanCallRoomId = document.getElementById('spanCallRoomId');
 const divMyStream = document.getElementById('divMyStream');
 const videoMyStream = document.getElementById('videoMyStream');
 const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
@@ -48,6 +49,7 @@ async function readyToJoin() {
   divMirror.style.display = 'flex';
   divButtons.style.display = 'flex';
   spanMirrorRoomId.innerHTML = currentRoomId;
+  spanCallRoomId.innerHTML = currentRoomId;
   await getMirror();
 }
 
