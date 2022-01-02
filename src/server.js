@@ -22,6 +22,10 @@ io.on('connection', (socket) => {
   socket.on('client_send_offer', (roomId, offer) => {
     socket.to(roomId).emit('server_offer', offer);
   });
+
+  socket.on('client_send_answer', (roomId, answer) => {
+    socket.to(roomId).emit('server_answer', answer);
+  });
 });
 
 httpServer.listen(3000, () =>
