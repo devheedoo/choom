@@ -2,7 +2,8 @@ const socket = io(); // from socket.io
 
 // Room
 const divRoom = document.getElementById('divRoom');
-const formRoom = document.getElementById('formRoom');
+const formCreateRoom = document.getElementById('formCreateRoom');
+const formJoinRoom = document.getElementById('formJoinRoom');
 const inputRoomId = document.getElementById('inputRoomId');
 const buttonJoinRoom = document.getElementById('buttonJoinRoom');
 let currentRoomId = 'no_public_room_id';
@@ -81,7 +82,20 @@ async function changeCamera(cameraDeviceId) {
   }
 }
 
-formRoom.addEventListener('submit', async (e) => {
+formCreateRoom.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  console.log('fromCreateRoom SUBMIT');
+  const UPPERCASE_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let randomRoomId = '';
+  for (let i = 0; i < 5; i++) {
+    const randomIndex = Math.floor(Math.random() * UPPERCASE_ALPHABET.length);
+    randomRoomId += UPPERCASE_ALPHABET[randomIndex];
+  }
+  currentRoomId = randomRoomId;
+  inputRoomId.value = '';
+});
+
+formJoinRoom.addEventListener('submit', async (e) => {
   e.preventDefault();
   currentRoomId = inputRoomId.value;
   await initCall();
