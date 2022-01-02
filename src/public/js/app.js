@@ -1,10 +1,35 @@
 const socket = io(); // from socket.io
 
+// Room
+const divRoom = document.getElementById('divRoom');
+const formRoom = document.getElementById('formRoom');
+const inputRoomId = document.getElementById('inputRoomId');
+const buttonJoinRoom = document.getElementById('buttonJoinRoom');
+let currentRoomId = 'no_public_room_id';
+
+// Call
+const divCall = document.getElementById('divCall');
 const divMyStream = document.getElementById('divMyStream');
 const videoMyStream = divMyStream.querySelector('video');
 const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
 const buttonVideoOnOff = document.getElementById('buttonVideoOnOff');
 const selectCameras = document.getElementById('selectCameras');
+
+formRoom.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const roomId = inputRoomId.value;
+  socket.emit('client_join_room', roomId, () => {
+    divRoom.hidden = true;
+    divCall.hidden = false;
+    getMyStream();
+  });
+  currentRoomId = roomId;
+  inputRoomId.value = '';
+});
+
+socket.on('server_joined_room', () => {
+  console.log('someone joined room.');
+});
 
 /** @type {MediaStream} */
 let myStream;
@@ -53,8 +78,6 @@ async function changeCamera(cameraDeviceId) {
     console.log(e);
   }
 }
-
-getMyStream();
 
 let isAudioOff = false;
 let isVideoOff = false;
