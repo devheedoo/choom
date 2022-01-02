@@ -27,6 +27,9 @@ let myPeerConnection;
 let isAudioOff = false;
 let isVideoOff = false;
 
+/** @type {RTCDataChannel} */
+let myDataChannel;
+
 async function initCall() {
   divRoom.hidden = true;
   divCall.hidden = false;
@@ -116,12 +119,20 @@ selectCameras.addEventListener('input', () => {
 // Socket
 socket.on('join_room', async () => {
   console.log('someone joined room.');
+  myDataChannel = myPeerConnection.createDataChannel('chat');
+  myDataChannel.addEventListener('message', (event) => console.log(event.data));
   const myOffer = await myPeerConnection.createOffer();
   myPeerConnection.setLocalDescription(myOffer);
   socket.emit('offer', currentRoomId, myOffer);
 });
 
 socket.on('offer', async (offer) => {
+  myPeerConnection.addEventListener('datachannel', (event) => {
+    myDataChannel = event.channel;
+    myDataChannel.addEventListener('message', (event) =>
+      console.log(event.data)
+    );
+  });
   myPeerConnection.setRemoteDescription(offer);
   const myAnswer = await myPeerConnection.createAnswer();
   myPeerConnection.setLocalDescription(myAnswer);
