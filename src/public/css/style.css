@@ -155,9 +155,17 @@ header {
 }
 
 #divRoom {
-  width: 60vw;
-  height: 20vh;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#divRoomForm {
+  width: 60vw;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 }
@@ -188,4 +196,46 @@ header {
 
 i {
   margin: 2px;
+}
+
+#divMirror {
+  width: 500px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#h2MirrorRoomId {
+  font-size: 32px;
+  line-height: 1.4;
+}
+
+.divButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px;
+}
+
+.circleButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  border: 1px solid grey;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+  font-size: 15px;
+}
+
+.buttonOn {
+  background-color: rgb(67, 67, 228);
+  color: whitesmoke;
+}
+
+.buttonOff {
+  background-color: whitesmoke;
+  color: rgb(67, 67, 228);
 }
