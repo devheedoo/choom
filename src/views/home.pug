@@ -16,9 +16,10 @@ html(lang="en")
           button#buttonJoinRoom Create or Join
       div#divCall(hidden=true)
         div#divMyStream
-          video(autoplay, playsinline, width="400", height="400")
+          video#videoMyStream(autoplay, playsinline, width="400", height="400")
           button#buttonAudioOnOff Audio ON
           button#buttonVideoOnOff Video ON
           select#selectCameras
+          video#videoPeerStream(autoplay, playsinline, width="400", height="400")
     script(src="/socket.io/socket.io.js") 
     script(src="/public/js/app.js") 
