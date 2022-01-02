@@ -15,25 +15,23 @@ const buttonAudioOnOff = document.getElementById('buttonAudioOnOff');
 const buttonVideoOnOff = document.getElementById('buttonVideoOnOff');
 const selectCameras = document.getElementById('selectCameras');
 
-formRoom.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const roomId = inputRoomId.value;
-  socket.emit('client_join_room', roomId, () => {
-    divRoom.hidden = true;
-    divCall.hidden = false;
-    getMyStream();
-  });
-  currentRoomId = roomId;
-  inputRoomId.value = '';
-});
-
-socket.on('server_joined_room', () => {
-  console.log('someone joined room.');
-});
-
 /** @type {MediaStream} */
 let myStream;
+
 let cameras = [];
+
+/** @type {RTCPeerConnection} */
+let myPeerConnection;
+
+let isAudioOff = false;
+let isVideoOff = false;
+
+async function initCall() {
+  divRoom.hidden = true;
+  divCall.hidden = false;
+  await getMyStream();
+  makeConnection();
+}
 
 async function getMyStream() {
   try {
@@ -79,8 +77,13 @@ async function changeCamera(cameraDeviceId) {
   }
 }
 
-let isAudioOff = false;
-let isVideoOff = false;
+formRoom.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  currentRoomId = inputRoomId.value;
+  await initCall();
+  socket.emit('client_join_room', currentRoomId);
+  inputRoomId.value = '';
+});
 
 buttonAudioOnOff.addEventListener('click', () => {
   buttonAudioOnOff.innerHTML = isAudioOff ? 'Audio ON' : 'Audio OFF';
@@ -101,3 +104,23 @@ buttonVideoOnOff.addEventListener('click', () => {
 selectCameras.addEventListener('input', () => {
   changeCamera(selectCameras.value);
 });
+
+// Socket
+socket.on('server_joined_room', async () => {
+  console.log('someone joined room.');
+  const myOffer = await myPeerConnection.createOffer();
+  myPeerConnection.setLocalDescription(myOffer);
+  socket.emit('client_send_offer', currentRoomId, myOffer);
+});
+
+socket.on('server_offer', (offer) => {
+  console.log(offer);
+});
+
+// RTC
+function makeConnection() {
+  myPeerConnection = new RTCPeerConnection();
+  myStream
+    .getTracks()
+    .forEach((track) => myPeerConnection.addTrack(track, myStream));
+}
